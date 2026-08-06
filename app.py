@@ -7,7 +7,7 @@ from src.multilingual import detect_language, translate_text
 from src.summarization import summarize_text
 from src.topic_modeling import create_lda_topics, create_nmf_topics
 from src.semantic_search import semantic_search
-
+from src.chatbot import answer_question
 st.set_page_config(
     page_title="NewsBot Intelligence System",
     page_icon="📰",
@@ -237,6 +237,28 @@ if st.button("Search Articles"):
             st.write(result["document"])
     else:
         st.warning("Please enter a query and at least one article.")
+        st.divider()
+
+st.subheader("💬 Conversational Assistant")
+
+chat_question = st.text_input(
+    "Ask a question about the article:",
+    placeholder="Example: What is the sentiment of this article?",
+)
+
+if st.button("Ask NewsBot"):
+    if not article_text.strip():
+        st.warning("Please enter a news article first.")
+    elif not chat_question.strip():
+        st.warning("Please enter a question.")
+    else:
+        with st.spinner("NewsBot is analyzing the article..."):
+            chatbot_answer = answer_question(
+                chat_question,
+                article_text,
+            )
+
+        st.success(chatbot_answer)
 st.divider()
 
 st.caption(
