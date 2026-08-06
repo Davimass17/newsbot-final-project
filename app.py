@@ -92,16 +92,20 @@ st.divider()
 
 st.subheader("🌍 Translation")
 
-target_language = st.selectbox(
+language_options = {
+    "English": "en",
+    "Portuguese": "pt",
+    "Spanish": "es",
+    "French": "fr",
+    "German": "de",
+}
+
+selected_language = st.selectbox(
     "Select the target language:",
-    options={
-        "English": "en",
-        "Portuguese": "pt",
-        "Spanish": "es",
-        "French": "fr",
-        "German": "de",
-    },
+    options=list(language_options.keys()),
 )
+
+target_language = language_options[selected_language]
 
 if st.button("Translate Article"):
     if article_text.strip():
