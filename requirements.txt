@@ -1,0 +1,13 @@
+streamlit
+pandas
+numpy
+scikit-learn
+nltk
+spacy
+transformers
+torch
+sentence-transformers
+langdetect
+deep-translator
+plotly
+wordcloud
