@@ -6,7 +6,7 @@ from src.content_analysis import analyze_sentiment
 from src.multilingual import detect_language, translate_text
 from src.summarization import summarize_text
 from src.topic_modeling import create_lda_topics, create_nmf_topics
-
+from src.semantic_search import semantic_search
 
 st.set_page_config(
     page_title="NewsBot Intelligence System",
@@ -194,8 +194,49 @@ with topic_col2:
 
         for topic, words in results.items():
             st.write(f"*{topic}:* {', '.join(words)}")
+st.divider()
 
+st.subheader("🔎 Semantic Search")
 
+search_documents = st.text_area(
+    "Enter news articles separated by three dashes (---):",
+    height=250,
+    key="semantic_documents",
+)
+
+search_query = st.text_input(
+    "What topic are you looking for?"
+)
+
+top_k = st.slider(
+    "Number of results",
+    1,
+    5,
+    3,
+)
+
+if st.button("Search Articles"):
+    documents = [
+        doc.strip()
+        for doc in search_documents.split("---")
+        if doc.strip()
+    ]
+
+    if search_query and documents:
+        results = semantic_search(
+            search_query,
+            documents,
+            top_k,
+        )
+
+        st.subheader("Results")
+
+        for i, result in enumerate(results, start=1):
+            st.write(f"### Result {i}")
+            st.write(f"Similarity: {result['score']}")
+            st.write(result["document"])
+    else:
+        st.warning("Please enter a query and at least one article.")
 st.divider()
 
 st.caption(
