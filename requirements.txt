@@ -11,3 +11,4 @@ langdetect
 deep-translator
 plotly
 wordcloud
+textblob
